@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snake Game</title>
+  <title>Snake Game + Mini Game</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Mini Geometry Dash style */
+    #miniGameCanvas {
+      background: #222;
+      border: 4px solid #fff;
+      border-radius: 12px;
+      display: block;
+      margin: 20px auto;
+    }
+    #miniGameContainer {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <div class="game-container">
@@ -27,29 +40,18 @@
     </button>
   </div>
 
-  <!-- Play Slope button -->
-  <div style="margin-top: 20px; text-align: center;">
-    <button id="playSlope" style="
+  <!-- Mini Geometry Dash -->
+  <div id="miniGameContainer">
+    <button id="startMiniGame" style="
         padding: 12px 24px;
         font-size: 18px;
         font-weight: bold;
-        background-color: #00ccff;
+        background-color: #00ff88;
         border: none;
         border-radius: 8px;
         cursor: pointer;
-    ">
-      Play Slope
-    </button>
-  </div>
-
-  <!-- Slope iframe container -->
-  <div id="slopeContainer" style="display:none; margin-top: 20px; text-align: center;">
-    <iframe src="https://www.crazygames.com/game/slope" 
-            width="800" 
-            height="600" 
-            frameborder="0" 
-            allowfullscreen>
-    </iframe>
+    ">Play Mini Jump Game</button>
+    <canvas id="miniGameCanvas" width="600" height="200" style="display:none;"></canvas>
   </div>
 
   <!-- Scripts -->
@@ -60,11 +62,66 @@
       window.open('https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf', '_blank');
     });
 
-    // Slope button
-    document.getElementById('playSlope').addEventListener('click', () => {
-      const slope = document.getElementById('slopeContainer');
-      slope.style.display = 'block'; // show iframe
-      slope.scrollIntoView({ behavior: 'smooth' }); // optional scroll to game
+    // Mini Geometry Dash
+    const miniCanvas = document.getElementById('miniGameCanvas');
+    const ctxMini = miniCanvas.getContext('2d');
+    let miniPlayer = { x: 50, y: 150, width: 20, height: 20, dy: 0 };
+    let miniObstacles = [];
+    let miniScore = 0;
+    let miniGameRunning = false;
+
+    function spawnObstacle() {
+      miniObstacles.push({ x: 600, y: 150, width: 20, height: 20 });
+    }
+
+    function updateMiniGame() {
+      ctxMini.clearRect(0,0,600,200);
+      
+      // player physics
+      miniPlayer.dy += 1; // gravity
+      miniPlayer.y += miniPlayer.dy;
+      if (miniPlayer.y > 150) miniPlayer.y = 150, miniPlayer.dy = 0;
+      
+      ctxMini.fillStyle = "lime";
+      ctxMini.fillRect(miniPlayer.x, miniPlayer.y, miniPlayer.width, miniPlayer.height);
+
+      // obstacles
+      for(let i=0;i<miniObstacles.length;i++){
+        miniObstacles[i].x -= 5;
+        ctxMini.fillStyle = "red";
+        ctxMini.fillRect(miniObstacles[i].x, miniObstacles[i].y, miniObstacles[i].width, miniObstacles[i].height);
+        // collision
+        if (miniPlayer.x < miniObstacles[i].x + miniObstacles[i].width &&
+            miniPlayer.x + miniPlayer.width > miniObstacles[i].x &&
+            miniPlayer.y < miniObstacles[i].y + miniObstacles[i].height &&
+            miniPlayer.height + miniPlayer.y > miniObstacles[i].y) {
+              alert("Game Over! Score: "+miniScore);
+              miniObstacles = [];
+              miniScore = 0;
+              miniGameRunning = false;
+              miniCanvas.style.display = "none";
+              clearInterval(miniInterval);
+        }
+      }
+      miniScore++;
+    }
+
+    let miniInterval;
+    document.getElementById('startMiniGame').addEventListener('click', () => {
+      miniCanvas.style.display = "block";
+      miniObstacles = [];
+      miniScore = 0;
+      miniPlayer.y = 150;
+      miniGameRunning = true;
+      if(miniInterval) clearInterval(miniInterval);
+      miniInterval = setInterval(updateMiniGame, 50);
+      setInterval(()=>{if(miniGameRunning) spawnObstacle();}, 1500);
+    });
+
+    document.addEventListener('keydown', e => {
+      if(e.key === " " && miniPlayer.y === 150){
+        miniPlayer.dy = -15; // jump
+      }
     });
   </script>
 </body>
