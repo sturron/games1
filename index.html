@@ -12,6 +12,27 @@
     <div class="score">Score: <span id="score">0</span></div>
   </div>
 
+  <!-- Subway Surfers button -->
+  <div style="margin-top: 20px; text-align: center;">
+    <button id="playSubway" style="
+        padding: 12px 24px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #ffcc00;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    ">
+      Play Subway Surfers SF
+    </button>
+  </div>
+
+  <!-- Scripts -->
   <script src="js/game.js"></script>
+  <script>
+    document.getElementById('playSubway').addEventListener('click', () => {
+      window.open('https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf', '_blank');
+    });
+  </script>
 </body>
 </html>
