@@ -17,6 +17,13 @@
     #miniGameContainer {
       text-align: center;
     }
+    /* Subway Surfers iframe */
+    #subwayFrame {
+      display: none;
+      margin-top: 15px;
+      border: 4px solid #000;
+      border-radius: 12px;
+    }
   </style>
 </head>
 <body>
@@ -25,7 +32,7 @@
     <div class="score">Score: <span id="score">0</span></div>
   </div>
 
-  <!-- Subway Surfers button -->
+  <!-- Knockoff Subway Surfers -->
   <div style="margin-top: 20px; text-align: center;">
     <button id="playSubway" style="
         padding: 12px 24px;
@@ -36,8 +43,10 @@
         border-radius: 8px;
         cursor: pointer;
     ">
-      Play Subway Surfers SF
+      Play Knockoff Subway Surfers
     </button>
+    <br>
+    <iframe id="subwayFrame" src="" width="800" height="500"></iframe>
   </div>
 
   <!-- Mini Geometry Dash -->
@@ -57,9 +66,23 @@
   <!-- Scripts -->
   <script src="js/game.js"></script>
   <script>
-    // Subway Surfers button
-    document.getElementById('playSubway').addEventListener('click', () => {
-      window.open('https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf', '_blank');
+    // Knockoff Subway Surfers embed toggle
+    const subwayBtn = document.getElementById('playSubway');
+    const subwayFrame = document.getElementById('subwayFrame');
+    let subwayOpen = false;
+
+    subwayBtn.addEventListener('click', () => {
+      if (!subwayOpen) {
+        subwayFrame.src = "https://raccziszy.github.io/games1/play/subwaysurfers/";
+        subwayFrame.style.display = "block";
+        subwayBtn.textContent = "Close Subway Surfers";
+        subwayOpen = true;
+      } else {
+        subwayFrame.src = "";
+        subwayFrame.style.display = "none";
+        subwayBtn.textContent = "Play Knockoff Subway Surfers";
+        subwayOpen = false;
+      }
     });
 
     // Mini Geometry Dash
