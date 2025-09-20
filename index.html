@@ -27,11 +27,44 @@
     </button>
   </div>
 
+  <!-- Play Slope button -->
+  <div style="margin-top: 20px; text-align: center;">
+    <button id="playSlope" style="
+        padding: 12px 24px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #00ccff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    ">
+      Play Slope
+    </button>
+  </div>
+
+  <!-- Slope iframe container -->
+  <div id="slopeContainer" style="display:none; margin-top: 20px; text-align: center;">
+    <iframe src="https://www.crazygames.com/game/slope" 
+            width="800" 
+            height="600" 
+            frameborder="0" 
+            allowfullscreen>
+    </iframe>
+  </div>
+
   <!-- Scripts -->
   <script src="js/game.js"></script>
   <script>
+    // Subway Surfers button
     document.getElementById('playSubway').addEventListener('click', () => {
       window.open('https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf', '_blank');
+    });
+
+    // Slope button
+    document.getElementById('playSlope').addEventListener('click', () => {
+      const slope = document.getElementById('slopeContainer');
+      slope.style.display = 'block'; // show iframe
+      slope.scrollIntoView({ behavior: 'smooth' }); // optional scroll to game
     });
   </script>
 </body>
