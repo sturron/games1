@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snake + Subway Surfers Launcher</title>
+  <title>Snake + Arcade Launcher</title>
   <style>
     body {
       display: flex;
@@ -17,9 +17,15 @@
       margin: 0;
     }
 
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px rgba(0,255,200,0.8);
+    }
+
     .game-container {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     canvas {
@@ -37,9 +43,15 @@
       font-weight: bold;
     }
 
+    .launcher-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
     /* Arcade style button */
     .launcher-btn {
-      padding: 12px 28px;
+      padding: 14px 32px;
       font-size: 20px;
       font-weight: bold;
       border: none;
@@ -58,15 +70,21 @@
   </style>
 </head>
 <body>
+  <h1>🎮 Mini Arcade Hub</h1>
+
   <div class="game-container">
     <canvas id="gameCanvas"></canvas>
     <div class="score">Score: <span id="score">0</span></div>
   </div>
 
-  <!-- Launch Subway Surfers Bali -->
-  <button class="launcher-btn" onclick="window.open('subway-surfers-bali/index.html','_blank')">
-    🚀 Play Subway Surfers Bali
-  </button>
+  <div class="launcher-menu">
+    <button class="launcher-btn" onclick="window.open('subway-surfers-bali/index.html','_blank')">
+      🚀 Play Subway Surfers Bali
+    </button>
+    <button class="launcher-btn" onclick="window.open('slope/index.html','_blank')">
+      🌀 Play Slope
+    </button>
+  </div>
 
   <script>
     const canvas = document.getElementById('gameCanvas');
