@@ -2,79 +2,41 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Subway Surfers Bali">
+  <!-- Modern mobile web app meta -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <style>
-        body {
-            background-color: #000;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
+  <title>Subway Surfers Bali</title>
 
-        #play-btn {
-            background: #ff4c4c;
-            color: white;
-            font-size: 1.5rem;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease, background 0.3s ease;
-            z-index: 100;
-        }
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+    }
 
-        #play-btn:hover {
-            transform: scale(1.05);
-            background: #e63939;
-        }
-
-        #og-game-holder {
-            display: none;
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            background: black;
-        }
-    </style>
-
-    <title>Subway Surfers Bali</title>
+    #og-game-holder {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background: black;
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Button first -->
-    <button id="play-btn">▶ Play Subway Surfers</button>
+  <!-- Game container -->
+  <div id="og-game-holder"></div>
 
-    <!-- Game holder -->
-    <div id="og-game-holder"></div>
-
-    <!-- All the game scripts (but they won’t start until Play is clicked) -->
-    <script src="js/games_lib/ludiAdapter.js" defer></script>
-    <script src="js/scr.js" defer></script>
-    <script src="js/boot.js" defer></script>
-
-    <script>
-        document.getElementById("play-btn").addEventListener("click", function () {
-            this.style.display = "none"; // hide button
-            document.getElementById("og-game-holder").style.display = "block"; // show game
-
-            // Some games need a fake resize event to start rendering
-            setTimeout(() => {
-                window.dispatchEvent(new Event("resize"));
-            }, 100);
-        });
-    </script>
+  <!-- Load game scripts with correct paths -->
+  <script src="games1/js/games_lib/ludiAdapter.js"></script>
+  <script src="games1/js/scr.js"></script>
+  <script src="games1/js/boot.js"></script>
 </body>
-
 </html>
