@@ -2,25 +2,21 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="viewport"
-        content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, minimal-ui">
-    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Subway Surfers Bali">
 
     <style>
         body {
-            background-color: #000000;
+            background-color: #000;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             font-family: Arial, sans-serif;
         }
 
@@ -34,6 +30,7 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s ease, background 0.3s ease;
+            z-index: 100;
         }
 
         #play-btn:hover {
@@ -44,11 +41,11 @@
         #og-game-holder {
             display: none;
             position: fixed;
-            overflow: hidden;
             width: 100%;
             height: 100vh;
             top: 0;
             left: 0;
+            background: black;
         }
     </style>
 
@@ -59,27 +56,23 @@
     <!-- Button first -->
     <button id="play-btn">▶ Play Subway Surfers</button>
 
-    <!-- Game holder (hidden until button clicked) -->
+    <!-- Game holder -->
     <div id="og-game-holder"></div>
+
+    <!-- All the game scripts (but they won’t start until Play is clicked) -->
+    <script src="js/games_lib/ludiAdapter.js" defer></script>
+    <script src="js/scr.js" defer></script>
+    <script src="js/boot.js" defer></script>
 
     <script>
         document.getElementById("play-btn").addEventListener("click", function () {
             this.style.display = "none"; // hide button
             document.getElementById("og-game-holder").style.display = "block"; // show game
 
-            // Dynamically load all scripts for the game
-            const scripts = [
-                "js/games_lib/ludiAdapter.js",
-                "js/scr.js",
-                "js/boot.js"
-            ];
-
-            scripts.forEach(src => {
-                const s = document.createElement("script");
-                s.src = src;
-                s.async = false; // keep order
-                document.body.appendChild(s);
-            });
+            // Some games need a fake resize event to start rendering
+            setTimeout(() => {
+                window.dispatchEvent(new Event("resize"));
+            }, 100);
         });
     </script>
 </body>
