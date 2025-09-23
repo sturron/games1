@@ -3,30 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arcade Hub</title>
+  <title>Raza's High-Tech Arcade Hub</title>
   <style>
     body {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      background: #000;
       font-family: 'Arial', sans-serif;
-      color: #fff;
+      color: #f00;
       margin: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #f00;
+      text-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa, 0 0 30px #ff0000bb;
+      margin: 20px 0;
     }
 
     .game-container {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      border: 2px solid #f00;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #f00, 0 0 40px #ff0000aa inset;
     }
 
     canvas {
-      background: #111;
-      border: 4px solid #fff;
-      border-radius: 12px;
       display: block;
+      background: #111;
+      border: 2px solid #f00;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #f00 inset;
     }
 
     .score {
@@ -35,37 +48,51 @@
       left: 0;
       font-size: 24px;
       font-weight: bold;
-    }
-
-    /* Arcade style buttons */
-    .launcher-btn {
-      padding: 12px 28px;
-      margin: 8px;
-      font-size: 20px;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(45deg, #00ff99, #00ccff);
-      color: #111;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(0,255,200,0.7), 0 0 30px rgba(0,200,255,0.5);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .launcher-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px rgba(0,255,200,1), 0 0 40px rgba(0,200,255,1);
+      color: #f00;
+      text-shadow: 0 0 5px #f00;
     }
 
     .launcher-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      max-width: 600px;
+      max-width: 650px;
+    }
+
+    .launcher-btn {
+      padding: 14px 30px;
+      margin: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      border: 2px solid #f00;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #111, #222);
+      color: #f00;
+      cursor: pointer;
+      box-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa inset;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
+    }
+
+    .launcher-btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(45deg, #330000, #550000);
+      box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
+    }
+
+    /* Optional neon flicker animation for header */
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity: 1;}
+      20%, 22%, 24%, 55% {opacity: 0.4;}
+    }
+
+    header {
+      animation: flicker 2s infinite;
     }
   </style>
 </head>
 <body>
+  <header>🎮 Raza's High-Tech Arcade Hub 🎮</header>
+
   <div class="game-container">
     <canvas id="gameCanvas"></canvas>
     <div class="score">Score: <span id="score">0</span></div>
@@ -155,7 +182,7 @@
       ctx.fill();
 
       for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i === 0 ? "#00ff99" : "#00cc77";
+        ctx.fillStyle = i === 0 ? "#ff5555" : "#ff0000";
         ctx.fillRect(
           snake[i].x * gridSize, 
           snake[i].y * gridSize, 
