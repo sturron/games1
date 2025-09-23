@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sturron's High-Tech Arcade Hub</title>
-  <!-- Using Orbitron as a free futuristic font -->
+  <!-- Orbitron for futuristic vibe -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -16,21 +16,16 @@
       font-family: 'Orbitron', sans-serif;
       color: #f00;
       margin: 0;
-      padding-top: 80px; /* pushes the canvas down so header doesn’t overlap score */
+      padding-top: 50px;
     }
 
     header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 2rem;
+      font-size: 3rem;
       font-weight: bold;
       color: #f00;
-      text-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa, 0 0 30px #ff0000bb;
-      z-index: 100;
-      padding: 20px 0;
-      background: rgba(0,0,0,0.8); /* slightly transparent so it looks sleek */
+      text-align: center;
+      text-shadow: 0 0 15px #f00, 0 0 30px #ff0000aa, 0 0 45px #ff0000bb;
+      margin-bottom: 40px;
       animation: flicker 2s infinite;
     }
 
@@ -41,7 +36,7 @@
 
     .game-container {
       position: relative;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
       border: 2px solid #f00;
       border-radius: 15px;
       box-shadow: 0 0 20px #f00, 0 0 40px #ff0000aa inset;
@@ -56,14 +51,12 @@
     }
 
     .score {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 24px;
       font-weight: bold;
       color: #f00;
       text-shadow: 0 0 5px #f00;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     .launcher-container {
@@ -71,9 +64,10 @@
       flex-wrap: wrap;
       justify-content: center;
       max-width: 650px;
+      margin-bottom: 40px;
     }
 
-    .launcher-btn {
+    .launcher-btn, .fullscreen-btn {
       padding: 14px 30px;
       margin: 10px;
       font-size: 18px;
@@ -87,7 +81,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
     }
 
-    .launcher-btn:hover {
+    .launcher-btn:hover, .fullscreen-btn:hover {
       transform: scale(1.1);
       background: linear-gradient(45deg, #330000, #550000);
       box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
@@ -95,12 +89,13 @@
   </style>
 </head>
 <body>
-  <header>🎮 Sturron's High-Tech Arcade Hub 🎮</header>
+  <header id="pageTitle">🎮 Sturron's High-Tech Arcade Hub 🎮</header>
 
   <div class="game-container">
     <canvas id="gameCanvas"></canvas>
-    <div class="score">Score: <span id="score">0</span></div>
   </div>
+  <div class="score">Score: <span id="score">0</span></div>
+  <button class="fullscreen-btn" onclick="toggleFullscreen()">🔲 Fullscreen Snake</button>
 
   <div class="launcher-container">
     <button class="launcher-btn" onclick="window.open('subway-surfers-bali/index.html','_blank')">
@@ -118,13 +113,27 @@
   </div>
 
   <script>
+    // Alternate header titles on page load
+    const titles = ["your goat, sturron", "by urs truly", "chicken jockey", "revive low taper fade"];
+    document.getElementById('pageTitle').innerText = titles[Math.floor(Math.random() * titles.length)];
+
+    // Fullscreen toggle
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.getElementById('gameCanvas').requestFullscreen().catch(err => {
+          alert(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Snake Game setup
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-
     const gridSize = 20;
     const tileCountX = 25;
     const tileCountY = 25;
-
     canvas.width = gridSize * tileCountX;
     canvas.height = gridSize * tileCountY;
 
@@ -139,36 +148,24 @@
 
     function draw() {
       const head = { x: snake[0].x + velocity.x, y: snake[0].y + velocity.y };
-
       head.x = (head.x + tileCountX) % tileCountX;
       head.y = (head.y + tileCountY) % tileCountY;
 
       if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
         alert("Game Over! Score: " + score);
-        snake = [
-          { x: 12, y: 12 },
-          { x: 11, y: 12 },
-          { x: 10, y: 12 }
-        ];
+        snake = [{ x: 12, y: 12 }, { x: 11, y: 12 }, { x: 10, y: 12 }];
         velocity = { x: 1, y: 0 };
         score = 0;
         document.getElementById('score').innerText = score;
-        apple = { 
-          x: Math.floor(Math.random() * tileCountX), 
-          y: Math.floor(Math.random() * tileCountY) 
-        };
+        apple = { x: Math.floor(Math.random() * tileCountX), y: Math.floor(Math.random() * tileCountY) };
         return;
       }
 
       snake.unshift(head);
-
       if (head.x === apple.x && head.y === apple.y) {
         score++;
         document.getElementById('score').innerText = score;
-        apple = { 
-          x: Math.floor(Math.random() * tileCountX), 
-          y: Math.floor(Math.random() * tileCountY) 
-        };
+        apple = { x: Math.floor(Math.random() * tileCountX), y: Math.floor(Math.random() * tileCountY) };
       } else {
         snake.pop();
       }
@@ -178,28 +175,16 @@
 
       ctx.fillStyle = "red";
       ctx.beginPath();
-      ctx.arc(
-        apple.x * gridSize + gridSize/2, 
-        apple.y * gridSize + gridSize/2, 
-        gridSize/2 - 2, 0, Math.PI * 2
-      );
+      ctx.arc(apple.x * gridSize + gridSize/2, apple.y * gridSize + gridSize/2, gridSize/2 - 2, 0, Math.PI * 2);
       ctx.fill();
 
       for (let i = 0; i < snake.length; i++) {
         ctx.fillStyle = i === 0 ? "#ff5555" : "#ff0000";
-        ctx.fillRect(
-          snake[i].x * gridSize, 
-          snake[i].y * gridSize, 
-          gridSize - 1, 
-          gridSize - 1
-        );
+        ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 1, gridSize - 1);
       }
     }
 
-    function update() {
-      draw();
-    }
-
+    function update() { draw(); }
     setInterval(update, 100);
 
     window.addEventListener('keydown', e => {
