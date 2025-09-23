@@ -3,27 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raza's High-Tech Arcade Hub</title>
+  <title>Sturron's High-Tech Arcade Hub</title>
+  <!-- Using Orbitron as a free futuristic font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       min-height: 100vh;
       background: #000;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Orbitron', sans-serif;
       color: #f00;
       margin: 0;
-      overflow-x: hidden;
+      padding-top: 80px; /* pushes the canvas down so header doesn’t overlap score */
     }
 
     header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      text-align: center;
       font-size: 2rem;
       font-weight: bold;
       color: #f00;
       text-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa, 0 0 30px #ff0000bb;
-      margin: 20px 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(0,0,0,0.8); /* slightly transparent so it looks sleek */
+      animation: flicker 2s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity: 1;}
+      20%, 22%, 24%, 55% {opacity: 0.4;}
     }
 
     .game-container {
@@ -45,7 +58,8 @@
     .score {
       position: absolute;
       top: -40px;
-      left: 0;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 24px;
       font-weight: bold;
       color: #f00;
@@ -78,20 +92,10 @@
       background: linear-gradient(45deg, #330000, #550000);
       box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
     }
-
-    /* Optional neon flicker animation for header */
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity: 1;}
-      20%, 22%, 24%, 55% {opacity: 0.4;}
-    }
-
-    header {
-      animation: flicker 2s infinite;
-    }
   </style>
 </head>
 <body>
-  <header>🎮 Raza's High-Tech Arcade Hub 🎮</header>
+  <header>🎮 Sturron's High-Tech Arcade Hub 🎮</header>
 
   <div class="game-container">
     <canvas id="gameCanvas"></canvas>
