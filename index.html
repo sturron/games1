@@ -3,93 +3,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game + Web Launcher</title>
+  <title>Sturron's High-Tech Arcade Hub</title>
+  <!-- Orbitron for futuristic vibe -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #111;
-      color: white;
-    }
-    .launcher-container {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 20px;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #f00;
+      margin: 0;
+      padding: 30px 10px;
     }
-    .launcher-btn {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      background: #333;
-      color: white;
-      transition: 0.2s;
+
+    header {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #f00;
+      text-align: center;
+      text-shadow: 0 0 15px #f00, 0 0 30px #ff0000aa, 0 0 45px #ff0000bb;
+      margin-bottom: 30px;
+      animation: flicker 2s infinite;
     }
-    .launcher-btn:hover {
-      background: #555;
+
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {opacity: 1;}
+      20%, 22%, 24%, 55% {opacity: 0.4;}
     }
+
+    /* Search Bar */
     .search-bar {
-      margin: 20px;
+      margin: 20px 0 40px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
     .search-input {
-      width: 60%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
+      padding: 12px 20px;
       font-size: 16px;
-    }
-    .search-btn {
-      padding: 10px 18px;
-      margin-left: 8px;
-      border-radius: 8px;
-      border: none;
-      background: #444;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    iframe {
-      width: 90%;
-      height: 80vh;
-      border: 2px solid #666;
+      border: 2px solid #f00;
       border-radius: 12px;
-      margin-top: 20px;
+      outline: none;
+      background: #111;
+      color: #f00;
+      width: 280px;
+      margin-right: 10px;
+      box-shadow: 0 0 10px #f00 inset;
+    }
+
+    .search-input::placeholder {
+      color: #f55;
+    }
+
+    .search-btn {
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid #f00;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #111, #222);
+      color: #f00;
+      cursor: pointer;
+      box-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa inset;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
+    }
+
+    .search-btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(45deg, #330000, #550000);
+      box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
+    }
+
+    /* Snake Game */
+    .game-container {
+      position: relative;
+      margin-bottom: 15px;
+      border: 2px solid #f00;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #f00, 0 0 40px #ff0000aa inset;
+    }
+
+    canvas {
+      display: block;
+      background: #111;
+      border: 2px solid #f00;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #f00 inset;
+    }
+
+    .score {
+      font-size: 20px;
+      font-weight: bold;
+      color: #f00;
+      text-shadow: 0 0 5px #f00;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .fullscreen-btn {
+      padding: 12px 25px;
+      margin-bottom: 40px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid #f00;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #111, #222);
+      color: #f00;
+      cursor: pointer;
+      box-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa inset;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
+    }
+
+    .fullscreen-btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(45deg, #330000, #550000);
+      box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
+    }
+
+    /* Game Launcher */
+    .launcher-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
+
+    .launcher-btn {
+      padding: 14px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border: 2px solid #f00;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #111, #222);
+      color: #f00;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa inset;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
+    }
+
+    .launcher-btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(45deg, #330000, #550000);
+      box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
     }
   </style>
 </head>
 <body>
-  <h1>🚀 Game & Web Launcher</h1>
+  <header id="pageTitle">🎮 Sturron's High-Tech Arcade Hub 🎮</header>
 
-  <!-- Game Launcher Buttons -->
-  <div class="launcher-container">
-    <button class="launcher-btn" onclick="window.open('subway-surfers-bali/index.html','_blank')">🏃 Subway Surfers Bali</button>
-    <button class="launcher-btn" onclick="window.open('slope/index.html','_blank')">🟦 Slope</button>
-    <button class="launcher-btn" onclick="window.open('motox3m/index.html','_blank')">🏍️ Moto X3M</button>
-    <button class="launcher-btn" onclick="window.open('deathrun/index.html','_blank')">💀 Deathrun</button>
-    <button class="launcher-btn" onclick="window.open('among-us/index.html','_blank')">👨‍🚀 Among Us</button>
-    <button class="launcher-btn" onclick="window.open('Stickman-Hook-main/index.html','_blank')">🪝 Stickman Hook</button>
-    <button class="launcher-btn" onclick="window.open('stealingthediamond/index.html','_blank')">💎 Stealing the Diamond</button>
-  </div>
-
-  <!-- Website Search Bar -->
+  <!-- Search Bar -->
   <div class="search-bar">
-    <input id="urlInput" class="search-input" placeholder="Enter a website URL (example.com)">
-    <button class="search-btn" onclick="loadSite()">Go</button>
+    <input type="text" id="urlInput" class="search-input" placeholder="Enter website URL...">
+    <button class="search-btn" onclick="openURL()">🌐 Go</button>
   </div>
 
-  <!-- Iframe for websites -->
-  <iframe id="siteFrame"></iframe>
+  <!-- Snake Game -->
+  <div class="game-container">
+    <canvas id="gameCanvas"></canvas>
+  </div>
+  <div class="score">Score: <span id="score">0</span></div>
+  <button class="fullscreen-btn" onclick="toggleFullscreen()">🔲 Fullscreen Snake</button>
+
+  <!-- Game Launcher -->
+  <div class="launcher-container">
+    <button class="launcher-btn" onclick="window.open('among-us/index.html','_blank')">👨‍🚀 Among Us</button>
+    <button class="launcher-btn" onclick="window.open('deathrun/index.html','_blank')">💀 Deathrun</button>
+    <button class="launcher-btn" onclick="window.open('motox3m/index.html','_blank')">🏍️ Moto X3M</button>
+    <button class="launcher-btn" onclick="window.open('slope/index.html','_blank')">🟦 Slope</button>
+    <button class="launcher-btn" onclick="window.open('stealingthediamond/index.html','_blank')">💎 Stealing the Diamond</button>
+    <button class="launcher-btn" onclick="window.open('Stickman-Hook-main/index.html','_blank')">🪝 Stickman Hook</button>
+    <button class="launcher-btn" onclick="window.open('subway-surfers-bali/index.html','_blank')">🏃 Subway Surfers Bali</button>
+    <button class="launcher-btn" onclick="window.open('10-minutes-till-dawn/index.html','_blank')">🌙 10 Minutes Till Dawn</button>
+  </div>
 
   <script>
-    function loadSite() {
-      let url = document.getElementById("urlInput").value.trim();
-      if (!url) return alert("Enter a URL first!");
-      if (!/^https?:\/\//i.test(url)) url = "https://" + url;
-      document.getElementById("siteFrame").src = url;
+    // Randomize header
+    const titles = ["your goat, sturron", "by urs truly", "chicken jockey", "revive low taper fade"];
+    document.getElementById('pageTitle').innerText = titles[Math.floor(Math.random() * titles.length)];
+
+    // Fullscreen toggle
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.getElementById('gameCanvas').requestFullscreen().catch(err => {
+          alert(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
     }
+
+    // Open URL from search bar
+    function openURL() {
+      let url = document.getElementById('urlInput').value.trim();
+      if (!url) {
+        alert("Enter a URL first!");
+        return;
+      }
+      if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url;
+      }
+      window.open(url, "_blank");
+    }
+
+    // Snake Game setup
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gridSize = 20;
+    const tileCountX = 25;
+    const tileCountY = 25;
+    canvas.width = gridSize * tileCountX;
+    canvas.height = gridSize * tileCountY;
+
+    let snake = [
+      { x: 12, y: 12 },
+      { x: 11, y: 12 },
+      { x: 10, y: 12 }
+    ];
+    let velocity = { x: 1, y: 0 };
+    let apple = { x: 8, y: 8 };
+    let score = 0;
+
+    function draw() {
+      const head = { x: snake[0].x + velocity.x, y: snake[0].y + velocity.y };
+      head.x = (head.x + tileCountX) % tileCountX;
+      head.y = (head.y + tileCountY) % tileCountY;
+
+      if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+        alert("Game Over! Score: " + score);
+        snake = [{ x: 12, y: 12 }, { x: 11, y: 12 }, { x: 10, y: 12 }];
+        velocity = { x: 1, y: 0 };
+        score = 0;
+        document.getElementById('score').innerText = score;
+        apple = { x: Math.floor(Math.random() * tileCountX), y: Math.floor(Math.random() * tileCountY) };
+        return;
+      }
+
+      snake.unshift(head);
+      if (head.x === apple.x && head.y === apple.y) {
+        score++;
+        document.getElementById('score').innerText = score;
+        apple = { x: Math.floor(Math.random() * tileCountX), y: Math.floor(Math.random() * tileCountY) };
+      } else {
+        snake.pop();
+      }
+
+      ctx.fillStyle = "#111";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "red";
+      ctx.beginPath();
+      ctx.arc(apple.x * gridSize + gridSize/2, apple.y * gridSize + gridSize/2, gridSize/2 - 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      for (let i = 0; i < snake.length; i++) {
+        ctx.fillStyle = i === 0 ? "#ff5555" : "#ff0000";
+        ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 1, gridSize - 1);
+      }
+    }
+
+    function update() { draw(); }
+    setInterval(update, 100);
+
+    window.addEventListener('keydown', e => {
+      switch(e.key) {
+        case 'ArrowUp': if (velocity.y === 0) velocity = { x: 0, y: -1 }; break;
+        case 'ArrowDown': if (velocity.y === 0) velocity = { x: 0, y: 1 }; break;
+        case 'ArrowLeft': if (velocity.x === 0) velocity = { x: -1, y: 0 }; break;
+        case 'ArrowRight': if (velocity.x === 0) velocity = { x: 1, y: 0 }; break;
+      }
+    });
   </script>
 </body>
 </html>
