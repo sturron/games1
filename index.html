@@ -67,7 +67,7 @@
       margin-bottom: 40px;
     }
 
-    .launcher-btn, .fullscreen-btn {
+    .launcher-btn, .fullscreen-btn, .search-btn {
       padding: 14px 30px;
       margin: 10px;
       font-size: 18px;
@@ -81,10 +81,34 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
     }
 
-    .launcher-btn:hover, .fullscreen-btn:hover {
+    .launcher-btn:hover, .fullscreen-btn:hover, .search-btn:hover {
       transform: scale(1.1);
       background: linear-gradient(45deg, #330000, #550000);
       box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
+    }
+
+    .search-bar {
+      margin: 20px 0 30px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: 2px solid #f00;
+      border-radius: 12px;
+      outline: none;
+      background: #111;
+      color: #f00;
+      width: 300px;
+      margin-right: 10px;
+      box-shadow: 0 0 10px #f00 inset;
+    }
+
+    .search-input::placeholder {
+      color: #f55;
     }
   </style>
 </head>
@@ -96,6 +120,12 @@
   </div>
   <div class="score">Score: <span id="score">0</span></div>
   <button class="fullscreen-btn" onclick="toggleFullscreen()">🔲 Fullscreen Snake</button>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar">
+    <input type="text" id="urlInput" class="search-input" placeholder="Enter website URL...">
+    <button class="search-btn" onclick="openURL()">🌐 Go</button>
+  </div>
 
   <!-- GAME LAUNCHER BUTTONS -->
   <div class="launcher-container">
@@ -122,6 +152,19 @@
       } else {
         document.exitFullscreen();
       }
+    }
+
+    // Open URL from search bar
+    function openURL() {
+      let url = document.getElementById('urlInput').value.trim();
+      if (!url) {
+        alert("Enter a URL first!");
+        return;
+      }
+      if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url; // auto-add https if missing
+      }
+      window.open(url, "_blank");
     }
 
     // Snake Game setup
