@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sturron's High-Tech Arcade Hub</title>
-  <!-- Orbitron for futuristic vibe -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -34,7 +33,6 @@
       20%, 22%, 24%, 55% {opacity: 0.4;}
     }
 
-    /* Search Bar */
     .search-bar {
       margin: 20px 0 40px 0;
       display: flex;
@@ -55,11 +53,9 @@
       box-shadow: 0 0 10px #f00 inset;
     }
 
-    .search-input::placeholder {
-      color: #f55;
-    }
+    .search-input::placeholder { color: #f55; }
 
-    .search-btn {
+    .search-btn, .fullscreen-btn, .touch-btn {
       padding: 12px 25px;
       font-size: 16px;
       font-weight: bold;
@@ -72,13 +68,12 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
     }
 
-    .search-btn:hover {
+    .search-btn:hover, .fullscreen-btn:hover, .touch-btn:hover {
       transform: scale(1.1);
       background: linear-gradient(45deg, #330000, #550000);
       box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
     }
 
-    /* Snake Game */
     .game-container {
       position: relative;
       margin-bottom: 15px;
@@ -104,27 +99,31 @@
       text-align: center;
     }
 
-    .fullscreen-btn {
-      padding: 12px 25px;
+    .controls-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 40px;
-      font-size: 16px;
-      font-weight: bold;
-      border: 2px solid #f00;
-      border-radius: 12px;
-      background: linear-gradient(45deg, #111, #222);
-      color: #f00;
-      cursor: pointer;
-      box-shadow: 0 0 10px #f00, 0 0 20px #ff0000aa inset;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
     }
 
-    .fullscreen-btn:hover {
-      transform: scale(1.1);
-      background: linear-gradient(45deg, #330000, #550000);
-      box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
+    .touch-controls {
+      display: grid;
+      grid-template-columns: repeat(3, 50px);
+      grid-template-rows: repeat(3, 50px);
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Game Launcher */
+    .touch-controls div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .touch-btn { font-size: 20px; padding: 10px; width: 50px; height: 50px; }
+
     .launcher-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -153,68 +152,36 @@
       background: linear-gradient(45deg, #330000, #550000);
       box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
     }
-
-    /* Touch Controls */
-    .touch-controls {
-      display: grid;
-      grid-template-columns: 80px 80px 80px;
-      grid-template-rows: 80px 80px 80px;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 15px;
-      margin-bottom: 25px;
-    }
-
-    .touch-btn {
-      background: #111;
-      border: 2px solid #f00;
-      color: #f00;
-      font-size: 24px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      box-shadow: 0 0 15px #f00 inset;
-    }
-
-    .touch-btn:active {
-      background: #300;
-      box-shadow: 0 0 25px #ff0000;
-    }
   </style>
 </head>
 <body>
   <header id="pageTitle">🎮 Sturron's High-Tech Arcade Hub 🎮</header>
 
-  <!-- Search Bar -->
   <div class="search-bar">
     <input type="text" id="urlInput" class="search-input" placeholder="Enter website URL...">
     <button class="search-btn" onclick="openURL()">🌐 Go</button>
   </div>
 
-  <!-- Snake Game -->
   <div class="game-container">
     <canvas id="gameCanvas"></canvas>
   </div>
+  <div class="score">Score: <span id="score">0</span></div>
 
-  <!-- Touchscreen Controls -->
-  <div class="touch-controls">
-    <div></div>
-    <div class="touch-btn" id="btnUp">⬆️</div>
-    <div></div>
-    <div class="touch-btn" id="btnLeft">⬅️</div>
-    <div></div>
-    <div class="touch-btn" id="btnRight">➡️</div>
-    <div></div>
-    <div class="touch-btn" id="btnDown">⬇️</div>
-    <div></div>
+  <div class="controls-row">
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">🔲 Fullscreen Snake</button>
+    <div class="touch-controls">
+      <div></div>
+      <div><button class="touch-btn" id="upBtn">⬆️</button></div>
+      <div></div>
+      <div><button class="touch-btn" id="leftBtn">⬅️</button></div>
+      <div></div>
+      <div><button class="touch-btn" id="rightBtn">➡️</button></div>
+      <div></div>
+      <div><button class="touch-btn" id="downBtn">⬇️</button></div>
+      <div></div>
+    </div>
   </div>
 
-  <div class="score">Score: <span id="score">0</span></div>
-  <button class="fullscreen-btn" onclick="toggleFullscreen()">🔲 Fullscreen Snake</button>
-
-  <!-- Game Launcher -->
   <div class="launcher-container">
     <button class="launcher-btn" onclick="window.open('among-us/index.html','_blank')">👨‍🚀 Among Us</button>
     <button class="launcher-btn" onclick="window.open('deathrun/index.html','_blank')">💀 Deathrun</button>
@@ -229,35 +196,24 @@
   </div>
 
   <script>
-    // Randomize header
     const titles = ["your goat, sturron", "by urs truly", "chicken jockey", "revive low taper fade","ENRIQUEEE","67"];
     document.getElementById('pageTitle').innerText = titles[Math.floor(Math.random() * titles.length)];
 
-    // Fullscreen toggle
     function toggleFullscreen() {
       if (!document.fullscreenElement) {
         document.getElementById('gameCanvas').requestFullscreen().catch(err => {
-          alert(`Error attempting to enable fullscreen: ${err.message}`);
+          alert(`Error: ${err.message}`);
         });
-      } else {
-        document.exitFullscreen();
-      }
+      } else { document.exitFullscreen(); }
     }
 
-    // Open URL from search bar
     function openURL() {
       let url = document.getElementById('urlInput').value.trim();
-      if (!url) {
-        alert("Enter a URL first!");
-        return;
-      }
-      if (!/^https?:\/\//i.test(url)) {
-        url = "https://" + url;
-      }
+      if (!url) return alert("Enter a URL first!");
+      if (!/^https?:\/\//i.test(url)) url = "https://" + url;
       window.open(url, "_blank");
     }
 
-    // Snake Game setup
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const gridSize = 20;
@@ -295,9 +251,7 @@
         score++;
         document.getElementById('score').innerText = score;
         apple = { x: Math.floor(Math.random() * tileCountX), y: Math.floor(Math.random() * tileCountY) };
-      } else {
-        snake.pop();
-      }
+      } else snake.pop();
 
       ctx.fillStyle = "#111";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -313,8 +267,7 @@
       }
     }
 
-    function update() { draw(); }
-    setInterval(update, 100);
+    setInterval(draw, 100);
 
     window.addEventListener('keydown', e => {
       switch(e.key) {
@@ -325,11 +278,10 @@
       }
     });
 
-    // Touch Controls
-    document.getElementById("btnUp").addEventListener("touchstart", () => { if (velocity.y === 0) velocity = { x: 0, y: -1 }; });
-    document.getElementById("btnDown").addEventListener("touchstart", () => { if (velocity.y === 0) velocity = { x: 0, y: 1 }; });
-    document.getElementById("btnLeft").addEventListener("touchstart", () => { if (velocity.x === 0) velocity = { x: -1, y: 0 }; });
-    document.getElementById("btnRight").addEventListener("touchstart", () => { if (velocity.x === 0) velocity = { x: 1, y: 0 }; });
+    document.getElementById('upBtn').addEventListener('click', () => { if (velocity.y === 0) velocity = { x: 0, y: -1 }; });
+    document.getElementById('downBtn').addEventListener('click', () => { if (velocity.y === 0) velocity = { x: 0, y: 1 }; });
+    document.getElementById('leftBtn').addEventListener('click', () => { if (velocity.x === 0) velocity = { x: -1, y: 0 }; });
+    document.getElementById('rightBtn').addEventListener('click', () => { if (velocity.x === 0) velocity = { x: 1, y: 0 }; });
   </script>
 </body>
 </html>
