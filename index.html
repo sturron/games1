@@ -153,6 +153,35 @@
       background: linear-gradient(45deg, #330000, #550000);
       box-shadow: 0 0 25px #ff0000, 0 0 35px #ff4444 inset;
     }
+
+    /* Touch Controls */
+    .touch-controls {
+      display: grid;
+      grid-template-columns: 80px 80px 80px;
+      grid-template-rows: 80px 80px 80px;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+      margin-bottom: 25px;
+    }
+
+    .touch-btn {
+      background: #111;
+      border: 2px solid #f00;
+      color: #f00;
+      font-size: 24px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      box-shadow: 0 0 15px #f00 inset;
+    }
+
+    .touch-btn:active {
+      background: #300;
+      box-shadow: 0 0 25px #ff0000;
+    }
   </style>
 </head>
 <body>
@@ -168,6 +197,20 @@
   <div class="game-container">
     <canvas id="gameCanvas"></canvas>
   </div>
+
+  <!-- Touchscreen Controls -->
+  <div class="touch-controls">
+    <div></div>
+    <div class="touch-btn" id="btnUp">⬆️</div>
+    <div></div>
+    <div class="touch-btn" id="btnLeft">⬅️</div>
+    <div></div>
+    <div class="touch-btn" id="btnRight">➡️</div>
+    <div></div>
+    <div class="touch-btn" id="btnDown">⬇️</div>
+    <div></div>
+  </div>
+
   <div class="score">Score: <span id="score">0</span></div>
   <button class="fullscreen-btn" onclick="toggleFullscreen()">🔲 Fullscreen Snake</button>
 
@@ -183,7 +226,7 @@
     <button class="launcher-btn" onclick="window.open('geometrydash/index.html','_blank')">🟩 Geometry Dash</button>
     <button class="launcher-btn" onclick="window.open('rooftopsnipers/index.html','_blank')">🏢 Rooftop Snipers</button>
     <button class="launcher-btn" onclick="window.open('Paper-io-master/Paper-io-master/index.html','_blank')">🟨 Paper.io</button>
-</div>
+  </div>
 
   <script>
     // Randomize header
@@ -281,9 +324,12 @@
         case 'ArrowRight': if (velocity.x === 0) velocity = { x: 1, y: 0 }; break;
       }
     });
+
+    // Touch Controls
+    document.getElementById("btnUp").addEventListener("touchstart", () => { if (velocity.y === 0) velocity = { x: 0, y: -1 }; });
+    document.getElementById("btnDown").addEventListener("touchstart", () => { if (velocity.y === 0) velocity = { x: 0, y: 1 }; });
+    document.getElementById("btnLeft").addEventListener("touchstart", () => { if (velocity.x === 0) velocity = { x: -1, y: 0 }; });
+    document.getElementById("btnRight").addEventListener("touchstart", () => { if (velocity.x === 0) velocity = { x: 1, y: 0 }; });
   </script>
 </body>
 </html>
-
-
-
